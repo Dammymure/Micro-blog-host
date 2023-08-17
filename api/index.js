@@ -10,15 +10,23 @@ const userRouter = require("./routes/UserRoute")
 const tweetRouter = require("./routes/TweetRoute")
 const bodyParser = require('body-parser');
 
-// app.use(cors({ credentials: true }))
-const corsOptions = {
- origin: /^http:\/\/localhost(:\d+)?$/,
- credentials: true,
-};
-// app.use(cors())
-app.use(cors(corsOptions));
-// https://microblog-eta.vercel.app
+// const corsOptions = {
+//  origin: /^http:\/\/localhost(:\d+)?$/,
+//  credentials: true,
+// };
+// app.use(cors(corsOptions));
 
+const corsOptions = {
+ origin: 'https://microblog-eta.vercel.app', // Specify the allowed origin
+ methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+ credentials: true, // Allow cookies and authorization headers
+ optionsSuccessStatus: 204,
+};
+
+app.use(cors(corsOptions));
+
+// app.use(cors({ credentials: true }))
+// app.use(cors())
 // const corsOptions = {
 //  origin: '/^http:\/\/localhost(:\d+)?$/',
 //  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
