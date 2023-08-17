@@ -12,6 +12,7 @@ const Login = () => {
   const [password, setPassword] = useState('')
   const [redirect, setRedirect] = useState(false)
   const { setUserInfo } = useContext(UserContext)
+  const { setAuth } = useContext(UserContext)
 
 
   // Create a function for the handle input
@@ -42,6 +43,7 @@ const Login = () => {
             swal("Wrong credentials", "Try Again", "error")
           }else{
             setUserInfo(userInfo)
+            setAuth(userInfo)
             localStorage.setItem("currentUser",JSON.stringify(userInfo))
             swal("Successful Login", "success")
             setRedirect(true)

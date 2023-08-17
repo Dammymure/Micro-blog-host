@@ -19,27 +19,61 @@ import Options from './components/Options';
 
 
 function App() {
-  const { setUserInfo, userInfo } = useContext(UserContext);
-  // const [auth, setAuth] = useState()
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/user/profile`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-      // credentials: 'include',
-    }).then(response => {
-      response.json().then(userInfo => {
-        setUserInfo(userInfo);
-        localStorage.setItem("token", userInfo.token)
-        console.log(userInfo)
-        console.log(userInfo.token + "TOken")
-      });
-    });
-  }, []);
+  // const { setUserInfo, userInfo, auth, setAuth } = useContext(UserContext);
 
-  const username = userInfo?.token
+  // useEffect(() => {
+  //   fetch(`${process.env.REACT_APP_API_URL}/user/profile`, {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     credentials: 'include',
+  //     // credentials: 'include',
+  //   }).then(response => {
+  //     response.json().then(userInfo => {
+  //       setUserInfo(userInfo);
+  //       setAuth(userInfo)
+  //       localStorage.setItem("token", userInfo.token)
+  //       console.log(userInfo)
+  //       console.log(userInfo.token + "TOken")
+  //     });
+  //   });
+  // }
+  // , []);
+
+  const { setUserInfo, userInfo, auth, setAuth } = useContext(UserContext);
+
+  useEffect(() => {
+    if (auth) { // Check if auth is not empty
+      fetch(`${process.env.REACT_APP_API_URL}/user/profile`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      }).then(response => {
+        if (response.ok) {
+          response.json().then(userInfo => {
+            setUserInfo(userInfo);
+            setAuth(userInfo);
+            localStorage.setItem("token", userInfo.token);
+            console.log(userInfo);
+            console.log(userInfo.token + "TOken");
+          });
+        } else {
+          console.error('Failed to fetch user profile:', response.status);
+        }
+      }).catch(error => {
+        console.error('Error fetching user profile:', error);
+      });
+    }
+  }, [auth, setUserInfo, setAuth]); // Include auth in the dependency array
+
+
+
+  
+  // const username = userInfo?.token
+  const username = auth.token
   return (
     <UserContextProvider>
       <Routes>
