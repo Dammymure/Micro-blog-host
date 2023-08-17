@@ -87,11 +87,21 @@ const loginUser = async (req, res) => {
 //  });
 // }
 
+// const profile = (req, res) => {
+//  const { token } = req.cookies;
+//  jwt.verify(token, secret, {}, (err, info) => {
+//   if (err) throw err;
+//   res.json({ info, token }); // Include the token in the response
+//  });
+// };
+
 const profile = (req, res) => {
  const { token } = req.cookies;
  jwt.verify(token, secret, {}, (err, info) => {
-  if (err) throw err;
-  res.json({ info, token }); // Include the token in the response
+  if (err) {
+   return res.status(500).json({ error: 'Error verifying token' });
+  }
+  res.json({ info, token });
  });
 };
 
