@@ -100,7 +100,7 @@ import News from './components/News';
 import Options from './components/Options';
 
 function App() {
-  const { setUserInfo, setAuth } = useContext(UserContext);
+  const { setUserInfo, setAuth, auth, userInfo } = useContext(UserContext);
 
   useEffect(() => {
     const token = localStorage.getItem("currentUser"); // Get token from local storage
