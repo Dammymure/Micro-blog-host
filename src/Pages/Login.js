@@ -47,6 +47,7 @@ const Login = () => {
             localStorage.setItem("currentUser",JSON.stringify(userInfo))
             swal("Successful Login", "success")
             setRedirect(true)
+            console.log(userInfo)
           }
         })
       } else {
