@@ -10,22 +10,23 @@ const userRouter = require("./routes/UserRoute")
 const tweetRouter = require("./routes/TweetRoute")
 const bodyParser = require('body-parser');
 
-// app.use(cors({ credentials: true}))
-// const corsOptions = {
-//  origin: /^http:\/\/localhost(:\d+)?$/,
-//  credentials: true,
-// };
-// app.use(cors())
-// app.use(cors(corsOptions));
-
+// app.use(cors({ credentials: true }))
 const corsOptions = {
- origin: 'https://microblog-eta.vercel.app',
- methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
- credentials: true, // This depends on your needs
- optionsSuccessStatus: 204,
+ origin: /^http:\/\/localhost(:\d+)?$/,
+ credentials: true,
 };
-
+// app.use(cors())
 app.use(cors(corsOptions));
+// https://microblog-eta.vercel.app
+
+// const corsOptions = {
+//  origin: '/^http:\/\/localhost(:\d+)?$/',
+//  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//  credentials: true,
+//  optionsSuccessStatus: 204,
+// };
+
+// app.use(cors(corsOptions));
 
 app.use('/uploads', express.static(__dirname + '/uploads'))
 

@@ -33,6 +33,7 @@ const Login = () => {
         headers: { 'Content-Type': 'application/json' },
         credentials: "include",
       })
+      console.log(response);
       if (response.ok) {
         console.log(response)
         response.json().then(userInfo => {

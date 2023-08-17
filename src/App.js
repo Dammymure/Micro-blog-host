@@ -23,17 +23,23 @@ function App() {
   // const [auth, setAuth] = useState()
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/user/profile`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
       credentials: 'include',
+      // credentials: 'include',
     }).then(response => {
       response.json().then(userInfo => {
         setUserInfo(userInfo);
-        console.log(userInfo)
         localStorage.setItem("token", userInfo.token)
+        console.log(userInfo)
+        console.log(userInfo.token + "TOken")
       });
     });
   }, []);
 
-  const username = userInfo?.username
+  const username = userInfo?.token
   return (
     <UserContextProvider>
       <Routes>
@@ -45,8 +51,8 @@ function App() {
         {
           username && (
             <Route path='/home' element={<ProtectedRoute><Layout /></ProtectedRoute>}>
-              <Route index element={<ProtectedRoute><IndexPage id={userInfo.id} /></ProtectedRoute>} />
-              <Route path='/home/alltweets' element={<ProtectedRoute><AllTweets id={userInfo.id} /></ProtectedRoute>} />
+              <Route index element={<ProtectedRoute><IndexPage id={userInfo.info.id} /></ProtectedRoute>} />
+              <Route path='/home/alltweets' element={<ProtectedRoute><AllTweets id={userInfo.info.id} /></ProtectedRoute>} />
               <Route path='/home/tweet' element={<ProtectedRoute><Tweet /></ProtectedRoute>} />
               <Route path='/home/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
               <Route path='/home/news' element={<ProtectedRoute><News /></ProtectedRoute>} />

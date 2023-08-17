@@ -48,17 +48,15 @@ const loginUser = async (req, res) => {
   if (existingUser && (await existingUser.isPasswordMatch(password))) {
    jwt.sign({ username, id: existingUser._id }, secret, {}, (err, token) => {
     console.log(token);
+    // localStorage.setItem("token", token)
     if (err) throw err;
 
-    // const user = {
-    //  _id: existingUser._id,
-    //  username: existingUser.username,
-    //  email: existingUser.email,
-    //  imageURL: existingUser.imageURL,
-    //  msg: "You have successfully logged IN",
-    // }
-    // user.save()
-    return res.cookie('token', token).json({
+    return res.cookie('token', token, {
+     httpOnly: true, // This is recommended for security reasons
+     sameSite: 'strict', // Set to 'strict' or 'lax' as appropriate
+     secure: true, // Enable this if your application uses HTTPS
+     // Add more options as needed, such as domain and path
+    }).json({
      _id: existingUser._id,
      username: existingUser.username,
      email: existingUser.email,
@@ -66,7 +64,7 @@ const loginUser = async (req, res) => {
      msg: "You have successfully logged IN",
      token: token
     });
-    
+
    });
 
   }
@@ -80,13 +78,22 @@ const loginUser = async (req, res) => {
  }
 }
 
+// const profile = (req, res) => {
+//  const { token } = req.cookies;
+//  jwt.verify(token, secret, {}, (err, info) => {
+//   if (err) throw err;
+//   res.json(info);
+//   localStorage.setItem("token", token)
+//  });
+// }
+
 const profile = (req, res) => {
  const { token } = req.cookies;
  jwt.verify(token, secret, {}, (err, info) => {
   if (err) throw err;
-  res.json(info);
+  res.json({ info, token }); // Include the token in the response
  });
-}
+};
 
 const logOut = (req, res) => {
  res.cookie("token", "").json("Ok")
