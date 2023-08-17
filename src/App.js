@@ -101,9 +101,9 @@ import Options from './components/Options';
 
 function App() {
   const { setUserInfo, setAuth, auth, userInfo } = useContext(UserContext);
-
+  const token = localStorage.getItem("currentUser")
   useEffect(() => {
-    const token = localStorage.getItem("currentUser"); // Get token from local storage
+    ; // Get token from local storage
 
     if (token) { // Check if token exists
       fetch(`${process.env.REACT_APP_API_URL}/user/profile`, {
@@ -133,7 +133,7 @@ function App() {
         <Route path='/' element={<LandingPage />} />
         <Route path='/error' element={<Error />} />
         <Route path='/' element={<LeftSide />} />
-        {auth.token && (
+        {token && (
           <Route path='/home' element={<ProtectedRoute><Layout /></ProtectedRoute>}>
             <Route index element={<ProtectedRoute><IndexPage id={userInfo.info.id} /></ProtectedRoute>} />
             <Route path='/home/alltweets' element={<ProtectedRoute><AllTweets id={userInfo.info.id} /></ProtectedRoute>} />
@@ -143,7 +143,7 @@ function App() {
             <Route path='/home/options' element={<ProtectedRoute><Options /></ProtectedRoute>} />
           </Route>
         )}
-        {!auth.token && (
+        {!token && (
           <Route path='/home/error' element={<Error />} />
         )}
       </Routes>
@@ -152,7 +152,7 @@ function App() {
 }
 
 export function ProtectedRoute(props) {
-  if (localStorage.getItem("token")) {
+  if (localStorage.getItem("currentUser")) {
     return props.children;
   } else {
     return <Navigate to='/login' />;
