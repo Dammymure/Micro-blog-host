@@ -52,7 +52,7 @@ function App() {
         },
         credentials: 'include',
       }).then(response => {
-        if (response.ok) {
+        if (response) {
           response.json().then(userInfo => {
             setUserInfo(userInfo);
             setAuth(userInfo);
