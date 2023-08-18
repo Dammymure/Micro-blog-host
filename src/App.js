@@ -19,8 +19,31 @@ import Options from './components/Options';
 
 
 function App() {
-  const { setUserInfo, userInfo, auth, setAuth } = useContext(UserContext);
+  const { setUserInfo, userInfo } = useContext(UserContext);
   // const [auth, setAuth] = useState()
+
+  // useEffect(() => {
+  //   if (userInfo.token) {
+  //     fetch(`${process.env.REACT_APP_API_URL}/user/profile`, {
+  //       method: 'GET',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       credentials: 'include',
+  //     }).then(response => {
+  //       if (response.ok) {
+  //         response.json().then(userInfo => {
+  //           setUserInfo(userInfo);
+  //           localStorage.setItem("token", userInfo.token);
+  //           console.log(userInfo);
+  //           console.log(userInfo.token + "Token");
+  //         });
+  //       }
+  //     });
+  //   }
+  // }, [userInfo, setUserInfo]); 
+
+
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/user/profile`, {
       method: 'GET',
@@ -32,7 +55,7 @@ function App() {
     }).then(response => {
       response.json().then(userInfo => {
         setUserInfo(userInfo);
-        setAuth(userInfo)
+        // setAuth(userInfo)
         localStorage.setItem("token", userInfo.token)
         console.log(userInfo)
         console.log(userInfo.token + "TOken")
@@ -42,7 +65,7 @@ function App() {
   , []);
 
   // const username = userInfo?.token
-  const username = auth.token
+  const username = userInfo.token
   const allow = localStorage.getItem("currentUser")
   return (
     <UserContextProvider>
@@ -55,8 +78,8 @@ function App() {
         {
           allow && (
             <Route path='/home' element={<ProtectedRoute><Layout /></ProtectedRoute>}>
-              <Route index element={<ProtectedRoute><IndexPage id={userInfo.info.id} /></ProtectedRoute>} />
-              <Route path='/home/alltweets' element={<ProtectedRoute><AllTweets id={userInfo.info.id} /></ProtectedRoute>} />
+              <Route index element={<ProtectedRoute><IndexPage id={userInfo?.info?.id} /></ProtectedRoute>} />
+              <Route path='/home/alltweets' element={<ProtectedRoute><AllTweets id={userInfo?.info?.id} /></ProtectedRoute>} />
               <Route path='/home/tweet' element={<ProtectedRoute><Tweet /></ProtectedRoute>} />
               <Route path='/home/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
               <Route path='/home/news' element={<ProtectedRoute><News /></ProtectedRoute>} />

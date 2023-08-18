@@ -51,12 +51,7 @@ const loginUser = async (req, res) => {
     // localStorage.setItem("token", token)
     if (err) throw err;
 
-    return res.cookie('token', token, {
-     httpOnly: true, // This is recommended for security reasons
-     sameSite: 'strict', // Set to 'strict' or 'lax' as appropriate
-     secure: true, // Enable this if your application uses HTTPS
-     // Add more options as needed, such as domain and path
-    }).json({
+    return res.cookie('token', token).json({
      _id: existingUser._id,
      username: existingUser.username,
      email: existingUser.email,
@@ -64,7 +59,6 @@ const loginUser = async (req, res) => {
      msg: "You have successfully logged IN",
      token: token
     });
-
    });
 
   }
@@ -87,29 +81,24 @@ const loginUser = async (req, res) => {
 //  });
 // }
 
-// const profile = (req, res) => {
-//  const { token } = req.cookies;
-//  jwt.verify(token, secret, {}, (err, info) => {
-//   if (err) throw err;
-//   res.json({ info, token }); // Include the token in the response
-//  });
-// };
-
 const profile = (req, res) => {
  const { token } = req.cookies;
  jwt.verify(token, secret, {}, (err, info) => {
-  if (err) {
-   return res.status(500).json({ error: 'Error verifying token' });
-  }
-  res.json({ info, token });
+  if (err) throw err;
+  res.json({ info, token }); // Include the token in the response
  });
 };
 
-const logOut = (req, res) => {
- res.cookie("token", "").json("Ok")
- localStorage.removeItem("token")
-}
+// const logOut = (req, res) => {
+//  res.cookie("token", "").json("Ok")
+//  localStorage.removeItem("token")
+// }
 
+const logOut = (req, res) => {
+ res.clearCookie("token").json("Ok"); // Clear the token cookie
+ // localStorage.removeItem("token");    
+ // Remove from local storage
+}
 
 // Fetch single user
 const getOneUser = async (req, res) => {

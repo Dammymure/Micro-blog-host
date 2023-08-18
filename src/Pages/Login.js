@@ -12,7 +12,6 @@ const Login = () => {
   const [password, setPassword] = useState('')
   const [redirect, setRedirect] = useState(false)
   const { setUserInfo } = useContext(UserContext)
-  const { setAuth } = useContext(UserContext)
 
 
   // Create a function for the handle input
@@ -34,7 +33,6 @@ const Login = () => {
         headers: { 'Content-Type': 'application/json' },
         credentials: "include",
       })
-      console.log(response);
       if (response.ok) {
         console.log(response)
         response.json().then(userInfo => {
@@ -43,11 +41,10 @@ const Login = () => {
             swal("Wrong credentials", "Try Again", "error")
           }else{
             setUserInfo(userInfo)
-            setAuth(userInfo)
             localStorage.setItem("currentUser",JSON.stringify(userInfo))
+            localStorage.setItem("token",JSON.stringify(userInfo.token))
             swal("Successful Login", "success")
             setRedirect(true)
-            console.log(userInfo)
           }
         })
       } else {
@@ -67,7 +64,7 @@ const Login = () => {
       <div id='main'>
         <div class="container">
           <form class="form" id="form" onSubmit={handleSubmit}>
-            <h2 className="sign-header">Login With Twitter</h2>
+            <h2 className="sign-header">Register With Twitter</h2>
             <div class="form-control ">
               <label for="username">Username</label>
               <input type="text"

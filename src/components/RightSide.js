@@ -26,7 +26,7 @@ const RightSide = () => {
 
           update.length && update.map(post => {
             return (<>
-              <a href={post.link} target="_blank" className='news-tab'>
+              <a key={post.id} href={post.link} target="_blank" className='news-tab'>
                 <img src={post.image_url} alt="" className='news-image' />
                 <div className='news-container'>
                   <p className='trend'>Trending...</p>

@@ -8,12 +8,13 @@ const LeftSide = () => {
  const navigate = useNavigate()
 
  function logout() {
-  fetch("http://localhost:7000/api/user/logout", {
+  fetch(`${process.env.REACT_APP_API_URL}/user/logout`, {
    credentials: "include",
    method: "POST",
   })
   setUserInfo(null)
   localStorage.removeItem("currentUser")
+  localStorage.removeItem("token"); 
   console.log(userInfo)
   if (userInfo == null) {
    navigate("/home")
