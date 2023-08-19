@@ -54,6 +54,7 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 // middlewae for post http model
 app.use(express.json())
 app.use(cookieParser())
+app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", userRouter)
 app.use("/api", tweetRouter)

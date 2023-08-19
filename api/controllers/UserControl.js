@@ -3,6 +3,9 @@ const User = require("../models/UserModel")
 const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser');
 const secret = "sjfsdhsbflkjbsvhfslkdhs"
+const Tweet = require("../models/TweetModel")
+
+const fs = require('fs');
 
 
 const createUser = async (req, res) => {
@@ -14,25 +17,26 @@ const createUser = async (req, res) => {
   if (existingUser) {
    console.log("User already exists");
    return res.json({ msg: "User already exists", existingUser })
-  }else{
+  } else {
 
   }
 
   // If it doesnt exist create user 
-  const createdUser = await User.create({ 
-   username, 
-   email, 
-   password, 
-   imageURL})
+  const createdUser = await User.create({
+   username,
+   email,
+   password,
+   imageURL
+  })
   res.status(200).json({
-   id:createdUser._id,
+   id: createdUser._id,
    username: createdUser.username,
    email: createdUser.email,
    password: createdUser.password,
    imageURL: createdUser.imageURL,
-   msg:"User created successfully"
+   msg: "User created successfully"
   })
-  
+
   console.log(createdUser);
  }
  catch (err) {
@@ -51,7 +55,7 @@ const loginUser = async (req, res) => {
     // localStorage.setItem("token", token)
     if (err) throw err;
 
-    return res.cookie('token', token).json({
+    return res.cookie(token).json({
      _id: existingUser._id,
      username: existingUser.username,
      email: existingUser.email,
@@ -72,6 +76,43 @@ const loginUser = async (req, res) => {
  }
 }
 
+const createTweet = async (req, res) => {
+ // const token = req.params.id
+ // toString
+ try {
+  const { originalname, path } = req.file
+  const parts = originalname.split(".")
+  const ext = parts[parts.length - 1]
+  const newPath = path + "." + ext
+  fs.renameSync(path, newPath)
+
+  // const tokenZero = req.cookies
+  // const token = req.cookies;
+  // const token = Object.assign({}, req.cookies)
+  
+  const token = req.cookies.token
+  console.log(token);
+  jwt.verify(token, secret, {}, async (err, info) => {
+   if (err) throw err;
+   const { tweet, likes, photo, postedBy } = req.body
+   const postDoc = await Tweet.create({
+    tweet,
+    likes,
+    photo: newPath,
+    postedBy: info.id,
+   })
+   // console.log(postDoc)
+   // res.json(postDoc, "success")
+   res.status(200).json(postDoc)
+   console.log(postDoc);
+  })
+ } catch (err) {
+  res.json(err)
+  console.log("Error");
+ }
+}
+
+
 // const profile = (req, res) => {
 //  const { token } = req.cookies;
 //  jwt.verify(token, secret, {}, (err, info) => {
@@ -82,7 +123,9 @@ const loginUser = async (req, res) => {
 // }
 
 const profile = (req, res) => {
- const { token } = req.cookies;
+ const token = req.cookies.token;
+ console.log(token);
+ // const token = req.body.token
  jwt.verify(token, secret, {}, (err, info) => {
   if (err) throw err;
   res.json({ info, token }); // Include the token in the response
@@ -113,4 +156,4 @@ const getOneUser = async (req, res) => {
  }
 }
 
-module.exports = { createUser, loginUser, logOut, profile, getOneUser }
+module.exports = { createTweet, createUser, loginUser, logOut, profile, getOneUser }

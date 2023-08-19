@@ -25,15 +25,16 @@ const RightSide = () => {
         {!update.length ? (<Loader />) :
 
           update.length && update.map(post => {
-            return (<>
-              <a key={post.id} href={post.link} target="_blank" className='news-tab'>
+            return (<div key = {post.id
+          }>
+              <a  href={post.link} target="_blank" className='news-tab'>
                 <img src={post.image_url} alt="" className='news-image' />
                 <div className='news-container'>
                   <p className='trend'>Trending...</p>
                   <p className='news'>{post.title}</p>
                 </div>
               </a>
-            </>
+            </div>
             )
           })
         }
