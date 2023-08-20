@@ -77,8 +77,6 @@ const loginUser = async (req, res) => {
 }
 
 const createTweet = async (req, res) => {
- // const token = req.params.id
- // toString
  try {
   const { originalname, path } = req.file
   const parts = originalname.split(".")
@@ -94,6 +92,7 @@ const createTweet = async (req, res) => {
   console.log(token);
   jwt.verify(token, secret, {}, async (err, info) => {
    if (err) throw err;
+   console.log(info);
    const { tweet, likes, photo, postedBy } = req.body
    const postDoc = await Tweet.create({
     tweet,
@@ -123,7 +122,7 @@ const createTweet = async (req, res) => {
 // }
 
 const profile = (req, res) => {
- const token = req.cookies.token;
+ const token = req.json.token;
  console.log(token);
  // const token = req.body.token
  jwt.verify(token, secret, {}, (err, info) => {
