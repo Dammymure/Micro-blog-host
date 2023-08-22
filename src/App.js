@@ -46,7 +46,7 @@ function App() {
 
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/user/profile`, {
+    fetch(`https://microblog-eta.vercel.app/user/profile`, {
       // method: 'GET',
       // headers: {
       //   'Content-Type': 'application/json',

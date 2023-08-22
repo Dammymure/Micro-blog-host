@@ -63,7 +63,7 @@ const loginUser = async (req, res) => {
      msg: "You have successfully logged IN",
      token: token
     })
-    .res.headers.authorization({ token: token });
+     .res.headers.authorization({ token: token });
    });
 
   }
