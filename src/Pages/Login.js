@@ -11,7 +11,7 @@ const Login = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [redirect, setRedirect] = useState(false)
-  const { setUserInfo } = useContext(UserContext)
+  const { setUserInfo, userInfo } = useContext(UserContext)
 
 
   // Create a function for the handle input
@@ -36,10 +36,10 @@ const Login = () => {
       if (response.ok) {
         console.log(response)
         response.json().then(userInfo => {
-          console.log(userInfo)
           if (userInfo.msg === "Invalid credentials"){
             swal("Wrong credentials", "Try Again", "error")
           }else{
+            console.log(userInfo)
             setUserInfo(userInfo)
             localStorage.setItem("currentUser",JSON.stringify(userInfo))
             localStorage.setItem("token",JSON.stringify(userInfo.token))
@@ -52,6 +52,8 @@ const Login = () => {
       }
     }
   }
+  console.log(userInfo);
+
 
   if (redirect) {
     return <Navigate to={"/home"} />

@@ -55,14 +55,15 @@ const loginUser = async (req, res) => {
     // localStorage.setItem("token", token)
     if (err) throw err;
 
-    return res.cookie(token).json({
+    return res.cookie('token', token).json({
      _id: existingUser._id,
      username: existingUser.username,
      email: existingUser.email,
      imageURL: existingUser.imageURL,
      msg: "You have successfully logged IN",
      token: token
-    });
+    })
+    .res.headers.authorization({ token: token });
    });
 
   }
@@ -87,8 +88,12 @@ const createTweet = async (req, res) => {
   // const tokenZero = req.cookies
   // const token = req.cookies;
   // const token = Object.assign({}, req.cookies)
-  
+
   const token = req.cookies.token
+  // const token = JSON.stringify(req.cookies.token);
+  // const token = tokenData.token;
+  // const token = req.headers;
+  // const token = req.headers.authorization
   console.log(token);
   jwt.verify(token, secret, {}, async (err, info) => {
    if (err) throw err;
@@ -121,10 +126,21 @@ const createTweet = async (req, res) => {
 //  });
 // }
 
+// const profile = (req, res) => {
+//  // const token = req.cookies;
+//  const token = req.cookies.token
+//  // const token = req.body.token
+//  console.log(token);
+//  jwt.verify(token, secret, {}, (err, info) => {
+//   if (err) throw err;
+//   res.json({ info, token }); // Include the token in the response
+//  });
+// };
 const profile = (req, res) => {
- const token = req.json.token;
- console.log(token);
+ // const token = req.cookies;
+ const token = req.cookies.token
  // const token = req.body.token
+ console.log(token);
  jwt.verify(token, secret, {}, (err, info) => {
   if (err) throw err;
   res.json({ info, token }); // Include the token in the response

@@ -18,18 +18,25 @@ import Header from '../components/Header';
 
 const IndexPage = (id) => {
   // const { id } = useParams()
-  console.log(id.id);
+  console.log(id);
   const { setUserInfo, userInfo } = useContext(UserContext);
   const [tweet, setTweet] = useState('')
   const [files, setFiles] = useState('')
   const [redirect, setRedirect] = useState(false)
   const [userDetails, setUserDetails] = useState('')
 
+  const allow = localStorage.getItem("currentUser")
+  const parsedData = JSON.parse(allow);
+
+  console.log(parsedData);
+
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/create/user/` + id.id)
+    fetch(`${process.env.REACT_APP_API_URL}/create/user/` + parsedData._id)
       .then(response => {
         response.json().then(postInfo => {
+          console.log(postInfo);
           setUserDetails(postInfo)
+          console.log(userDetails);
           setUserInfo(postInfo)
           console.log(postInfo);
         })
@@ -76,14 +83,14 @@ const IndexPage = (id) => {
             <button><Link to='/home/news'>news</Link></button>
           </div>
         </div> */}
-        <Header/>
+        <Header />
         <div>
 
           <div className='tweet'>
 
             <form onSubmit={createNewTweet}>
               <div className='tweet-img-text'>
-                <img src={userDetails.imageURL} alt='' className='tweet-img' />
+                <img src={parsedData.imageURL} alt='' className='tweet-img' />
                 {/* <h1>{userDetails.username}</h1> */}
                 <input
                   type="text"
