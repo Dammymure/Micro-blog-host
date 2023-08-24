@@ -153,7 +153,7 @@ const profile = (req, res) => {
 // }
 
 const logOut = (req, res) => {
- res.clearCookie("token").json("Ok"); // Clear the token cookie
+ res.clearCookie("token", "").json("Ok"); // Clear the token cookie
  // localStorage.removeItem("token");    
  // Remove from local storage
 }

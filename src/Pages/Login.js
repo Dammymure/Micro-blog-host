@@ -36,6 +36,8 @@ const Login = () => {
             localStorage.setItem("token",JSON.stringify(userInfo.token))
             swal("Successful Login", "success")
             setRedirect(true)
+            document.cookie = `token=${userInfo.token}`;
+
           }
         })
       } else {

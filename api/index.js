@@ -16,31 +16,31 @@ const bodyParser = require('body-parser');
 // };
 // app.use(cors(corsOptions));
 
-// const corsOptions = {
-//  origin: 'https://microblog-eta.vercel.app', // Specify the allowed origin
-//  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-//  credentials: true, // Allow cookies and authorization headers
-//  optionsSuccessStatus: 204,
-// };
-
-const allowedOrigins = [
- /^http:\/\/localhost(:\d+)?$/,
- "https://microblog-eta.vercel.app",
- // Add more allowed origins if needed
-];
-
 const corsOptions = {
- origin: (origin, callback) => {
-  if (allowedOrigins.some((regex) => regex.test(origin))) {
-   callback(null, true);
-  } else {
-   callback(new Error("Not allowed by CORS"));
-  }
- },
- methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
- credentials: true,
+ origin: 'https://microblog-eta.vercel.app',  // Specify the allowed origin
+ methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+ credentials: true, // Allow cookies and authorization headers
  optionsSuccessStatus: 204,
 };
+
+// const allowedOrigins = [
+//  /^http:\/\/localhost(:\d+)?$/,
+//  "https://microblog-eta.vercel.app",
+//  // Add more allowed origins if needed
+// ];
+
+// const corsOptions = {
+//  origin: (origin, callback) => {
+//   if (allowedOrigins.some((regex) => regex.test(origin))) {
+//    callback(null, true);
+//   } else {
+//    callback(new Error("Not allowed by CORS"));
+//   }
+//  },
+//  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+//  credentials: true,
+//  optionsSuccessStatus: 204,
+// };
 
 
 
