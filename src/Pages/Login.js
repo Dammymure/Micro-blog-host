@@ -12,15 +12,6 @@ const Login = () => {
   const [password, setPassword] = useState('')
   const [redirect, setRedirect] = useState(false)
   const { setUserInfo, userInfo } = useContext(UserContext)
-
-
-  // Create a function for the handle input
-  // const handleInputs = (e) => {
-  //  const name = e.target.name;
-  //  const value = e.target.value;
-  //  setUser({ ...user, [name]: value })
-  // }
-
   async function handleSubmit(e) {
     e.preventDefault()
 
