@@ -14,7 +14,6 @@ const LeftSide = () => {
   })
   setUserInfo(null)
   localStorage.removeItem("currentUser")
-  document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
   localStorage.removeItem("token"); 
   
   console.log(userInfo)
