@@ -58,7 +58,12 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", userRouter)
 app.use("/api", tweetRouter)
-
+app.get("/", (req,res)=>{
+ return res.json({
+  success:true,
+  message:"Your server is up and running ..."
+ })
+})
 
 // app.listen(process.env.API_PORT, () => {
 //  console.log(`Server running on port ${PORT}`);
