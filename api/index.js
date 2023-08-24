@@ -17,7 +17,7 @@ const bodyParser = require('body-parser');
 // app.use(cors(corsOptions));
 
 const corsOptions = {
- origin: 'https://microblog-eta.vercel.app/api', // Specify the allowed origin
+ origin: 'https://microblog-eta.vercel.app', // Specify the allowed origin
  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
  credentials: true, // Allow cookies and authorization headers
  optionsSuccessStatus: 204,
