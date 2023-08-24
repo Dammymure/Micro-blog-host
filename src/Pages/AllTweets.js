@@ -104,7 +104,7 @@ const AllTweets = (id) => {
                   </div>
                   <div>
                     <p className='tweet-tweet'>{tweet.tweet}</p>
-                    <img src={`http://localhost:8000/` + tweet.photo} alt="" className='tweet-image' />
+                    <img src={`http://localhost:8080/` + tweet.photo} alt="" className='tweet-image' />
                     <div>
                       {tweet.likes.includes(currentID._id) ? (
                         <button onClick={() => { unlikeTweet(tweet._id, currentID._id) }} className='down'>
