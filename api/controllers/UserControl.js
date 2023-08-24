@@ -51,13 +51,11 @@ const loginUser = async (req, res) => {
   const existingUser = await User.findOne({ username: username })
   if (existingUser && (await existingUser.isPasswordMatch(password))) {
    jwt.sign({ username, id: existingUser._id }, secret, {}, (err, token) => {
-    console.log(token);
     // localStorage.setItem("token", token)
     if (err) throw err;
+    console.log(token);
 
-    return res
-     .cookie('token', token, { httpOnly: true })
-     .json({
+    return res.cookie('token', token, { httpOnly: true }).json({
       _id: existingUser._id,
       username: existingUser.username,
       email: existingUser.email,
@@ -65,7 +63,8 @@ const loginUser = async (req, res) => {
       msg: "You have successfully logged IN",
       token: token
      });
-   });
+    });
+    console.log(existingUser)
 
   }
   else {
