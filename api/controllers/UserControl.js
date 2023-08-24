@@ -55,15 +55,16 @@ const loginUser = async (req, res) => {
     // localStorage.setItem("token", token)
     if (err) throw err;
 
-    return res.cookie('token', token).json({
-     _id: existingUser._id,
-     username: existingUser.username,
-     email: existingUser.email,
-     imageURL: existingUser.imageURL,
-     msg: "You have successfully logged IN",
-     token: token
-    })
-     .res.headers.authorization({ token: token });
+    return res
+     .cookie('token', token, { httpOnly: true })
+     .json({
+      _id: existingUser._id,
+      username: existingUser.username,
+      email: existingUser.email,
+      imageURL: existingUser.imageURL,
+      msg: "You have successfully logged IN",
+      token: token
+     });
    });
 
   }
