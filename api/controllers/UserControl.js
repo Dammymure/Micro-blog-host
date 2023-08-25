@@ -79,6 +79,7 @@ const loginUser = async (req, res) => {
 }
 
 const createTweet = async (req, res) => {
+ const token = req.cookies.token
  try {
   const { originalname, path } = req.file
   const parts = originalname.split(".")
@@ -94,7 +95,6 @@ const createTweet = async (req, res) => {
   // const token = tokenData.token;
   // const token = req.headers;
   // const token = req.headers.authorization
-  const token = req.cookies.token
   console.log(token + "Create TWEET");
   jwt.verify(token, secret, {}, async (err, info) => {
    if (err) throw err;
