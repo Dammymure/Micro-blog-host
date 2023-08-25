@@ -53,7 +53,8 @@ const loginUser = async (req, res) => {
    jwt.sign({ username, id: existingUser._id }, secret, {}, (err, token) => {
     // localStorage.setItem("token", token)
     if (err) throw err;
-    console.log(token);
+    console.log("ALL GOOOOOOOD")
+    console.log(token + "latest");
 
     return res.cookie('token', token, { httpOnly: true }).json({
       _id: existingUser._id,
@@ -89,12 +90,12 @@ const createTweet = async (req, res) => {
   // const token = req.cookies;
   // const token = Object.assign({}, req.cookies)
 
-  const token = req.cookies.token
   // const token = JSON.stringify(req.cookies.token);
   // const token = tokenData.token;
   // const token = req.headers;
   // const token = req.headers.authorization
-  console.log(token);
+  const token = req.cookies.token
+  console.log(token + "Create TWEET");
   jwt.verify(token, secret, {}, async (err, info) => {
    if (err) throw err;
    console.log(info);
